@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <head>
+  <title>Tvättider</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <p >{{["måndagen","tisdagen", "onsdagen", "torsdagen", "fredagen", "lördagen", "söndagen"][slot.start_time.weekday()]}} {{slot.start_time.strftime("%d/%m")}}</p>
+      <h2 >Tvättid: {{slot.start_time.strftime("%H")}}:00-{{slot.end_time.strftime("%H")}}:00</h2>
+    <h2 >Torktumlare: {{h1}}:00-{{h2}}:00</h2>
+        <a href="/timetable"><button class="btn btn-primary"><i class="bi bi-arrow-left"></i>Back</button></a>
+      <hr class="my-4">
+              {%if msg%}
+              <div class="alert alert-danger mt-4" role="alert">
+                  {{msg}}
+              </div>
+        {%endif%}
+           <div class="container">
+              <label style="font-weight:bold">{{msg1}}</label>
+              {% if not slot.booker[0]%}
+              <form method="POST">
+              <button type="submit" name = "1" value="1"class="btn btn-success">Boka!</button>
+              </form>
+              {% endif %}
+               {% if slot.booker[0]==user%}
+              <form method="POST">
+              <button type="submit" name = "1avboka" value="1avboka"class="btn btn-danger">Avboka</button>
+              </form>
+              {% endif %}
+          </div>
+          <br>
+          <div class="container">
+              <label style="font-weight:bold">{{msg2}}</label>
+              {% if not slot.booker[1]%}
+              <form method="POST">
+              <button type="submit" name = "2" value="2"class="btn btn-success">Boka!</button>
+              </form>
+              {% endif %}
+              {% if slot.booker[1]==user%}
+              <form method="POST">
+              <button type="submit" name = "2avboka" value="2avboka"class="btn btn-danger">Avboka</button>
+              </form>
+              {% endif %}
+          </div>
+      </form>
+    </div>
+</div>
+
+</body>
+</html>

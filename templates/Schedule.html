@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Tvättider</title>
+  <link rel="icon" href="https://www.clipartkey.com/mpngs/m/169-1690996_laundry-icon-png-blue.png" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<style>
+.btn-group-vertical >
+.btn-sm {border-radius: 0 ;width:100%;height:50px;font-size:14px}
+
+.btn-group-vertical{width:100%}
+
+.col{padding:0px;width:10%;margin-left:-1px}
+
+.btn-lightgreen{
+background-color: #ccffcc;}
+
+.btn-green{
+background-color: #ccffcc;}
+</style>
+
+<body>
+
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+  <h1 class="display-4">Larrans Tvättbokning</h1>
+    <p class="lead">Här kan man boka tvättider.  Klicka på en ledig tid. Söndagar är drop in och går ej att boka i förväg.</p>
+    <hr class="my-4">
+    {%if msg%}
+        <div class="alert alert-danger" role="alert">
+          Viktigt! Skriv in din email <a href='/handle_account'>här</a>. Det används om du glömmer ditt lösenord
+          </div>
+          {%endif%}
+    {% if login_first %}
+    <p><a href="/login">Logga in</a> för att boka tvättider</p>
+    {% else %}
+      {%for booking in user_bookings%}
+        <div class="alert alert-info">
+          <strong>Du har tvättid</strong>
+          <br> {{["måndagen","tisdagen", "onsdagen", "torsdagen", "fredagen", "lördagen", "söndagen"][booking[0].start_time.weekday()]}} {{ booking[0].start_time.strftime("%d/%m")}} kl: {{booking[0]}}
+          <br> Tvättstuga {{booking[1]}}
+          <br> kan du inte komma? <a href="/timetable/{{booking[0].start_time.strftime('%y%m%d%H')}}">avboka/cancel</a>
+        </div>
+      {% endfor %}
+    <div class="container">
+    <a href="/handle_account"><button class="btn btn-primary"><i class="bi bi-person-fill"></i> Min användare</button></a> <a href="/symbols"><button class="btn btn-primary">tvättsymboler</button></a> <a href="/stains"><button class="btn btn-primary">fläckborttagning</button></a>
+      </div>
+    {% endif %}
+</div>
+
+  {%for week in timetable%}
+    <div class="row no-gutters m-2">
+      <label style="font-weight:bold">v.{{week[0][0].start_time.isocalendar().week}}</label>
+        {%for day in week%}
+          <div class="col">
+            <div class="btn-group-vertical">
+              <button type="button" class="btn btn-sm btn-primary"><a style="  color: inherit"href="https://en.wikipedia.org/wiki/{{day[0].start_time.strftime('%B_%d')}}">{{["mån","tis","ons","tor","fre","lör","sön"][day[0].start_time.weekday()]}}<br>{{day[0].start_time.strftime("%d/%m")}}</a></button>
+              {%for timeslot in day%}
+                <a type="button" href=/timetable/{{timeslot.start_time.strftime('%y%m%d%H')}} class="btn btn-sm {{'btn-green' if timeslot.rooms_left==2}} {{'btn-lightgreen' if timeslot.rooms_left==1}} {{'btn-secondary' if timeslot.rooms_left==0}}" style="border-color:#202020" >{{timeslot}}</a>
+              {%endfor%}
+          </div>
+          </div>
+        {%endfor%}
+
+    </div>
+  {%endfor%}
+
+</div>
+  </body>
+
+{%endblock%}
+
+
+</html>

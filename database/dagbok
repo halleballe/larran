@@ -1,0 +1,37 @@
+okej
+behöver ett Gud konto
+Gud  kan överskåda alla andra konton
+Gud kan skapa nya konton/radera gamla
+Gud kan t atillbaka/nollställa konton
+Gud kan öppna upp konton igen så att nya användare kan komma åt dem
+
+Gud kan överskåda tvättposterna
+Gud kan lägga till fler poster/ta bort gamla poster
+Gud kan boka/avboka alla tider
+
+behöver boendekonto
+boende kan registrera sig om deras konto är öppnat
+boende kan se tvättposter och boka lediga/avboka deras. (maxgräns/dag?)
+boende kan flytta ut a.k.a nollställa och lämna tillbaka kontot till gud
+
+
+Hur sparas konton?
+klass objekt i en pickle fil
+konto-objekten har attributer:
+namn, email, lösenord, rum-nr, roll(gud, boende, inaktiverad) (acces code?)
+
+hur sparas tidsposter?
+en lista med poster, av klass booking
+bookings har attributer tid, rum, person som bokat
+
+
+
+Vilka sidor behövs?
+Registrera
+Logga in
+konto dasboard
+
+Guds kontoöverblick
+Guds timetable editor
+
+Offentligt schema
